@@ -1,41 +1,40 @@
 package com.example.estateagency.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
+@Table (name= "properties")
+
 public class Properties {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long property_id;
-    String address;
-    String postcode;
-    String price;
-    String status;
-    String type;
-    String bedrooms;
-    String bathrooms;
-    String garden;
-    String seller_id_fk;
+    private String address;
+    private String postcode;
+    private int price;
+    private String status;
+    private String type;
+    private int bedrooms;
+    private int bathrooms;
+    private int garden;
 
 
 
-    @ManyToOne
-    private Sellers sellers;
 
+
+
+    // EMPTY CONSTRUCTOR
     public Properties() {
     }
 
 
 
-    public long getId() {
-        return property_id;
-    }
 
-    public void setId(long id) {
-        this.property_id = id;
-    }
+    //CONSTRUCTOR
 
-    public Properties(long property_id, String address, String postcode, String price, String status, String type, String bedrooms, String bathrooms, String garden, String seller_id_fk, Sellers sellers) {
+    public Properties(long property_id, String address, String postcode, int price, String status, String type, int bedrooms, int bathrooms, int garden, Buyers buyers, Sellers sellers) {
         this.property_id = property_id;
         this.address = address;
         this.postcode = postcode;
@@ -45,9 +44,23 @@ public class Properties {
         this.bedrooms = bedrooms;
         this.bathrooms = bathrooms;
         this.garden = garden;
-        this.seller_id_fk = seller_id_fk;
+        this.buyers = buyers;
         this.sellers = sellers;
     }
+    public Properties(long property_id, String address, String postcode, int price, String status, String type, int bedrooms, int bathrooms, int garden, Sellers sellers ) {
+        this.property_id = property_id;
+        this.address = address;
+        this.postcode = postcode;
+        this.price = price;
+        this.status = status;
+        this.type = type;
+        this.bedrooms = bedrooms;
+        this.bathrooms = bathrooms;
+        this.garden = garden;
+        this.sellers = sellers;
+    }
+    //GETTER SETTERS
+
 
     public long getProperty_id() {
         return property_id;
@@ -73,11 +86,11 @@ public class Properties {
         this.postcode = postcode;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -97,38 +110,28 @@ public class Properties {
         this.type = type;
     }
 
-    public String getBedrooms() {
+    public int getBedrooms() {
         return bedrooms;
     }
 
-    public void setBedrooms(String bedrooms) {
+    public void setBedrooms(int bedrooms) {
         this.bedrooms = bedrooms;
     }
 
-    public String getBathrooms() {
+    public int getBathrooms() {
         return bathrooms;
     }
 
-    public void setBathrooms(String bathrooms) {
+    public void setBathrooms(int bathrooms) {
         this.bathrooms = bathrooms;
     }
 
-    public String getGarden() {
+    public int getGarden() {
         return garden;
     }
-
-    public void setGarden(String garden) {
+    public void setGarden(int garden) {
         this.garden = garden;
     }
-
-    public String getSeller_id_fk() {
-        return seller_id_fk;
-    }
-
-    public void setSeller_id_fk(String seller_id_fk) {
-        this.seller_id_fk = seller_id_fk;
-    }
-
     public Sellers getSellers() {
         return sellers;
     }
@@ -137,19 +140,46 @@ public class Properties {
         this.sellers = sellers;
     }
 
+    public Buyers getBuyers() {
+        return buyers;
+    }
+
+    public void setBuyers(Buyers buyers) {
+        this.buyers = buyers;
+    }
+
+
+    //BUYER FIELD
+    @ManyToOne
+    @JoinColumn(name = "buyers_id")
+
+    private Buyers buyers;
+
+
+    //SELLER FIELD
+
+    @ManyToOne
+    @JoinColumn(name = "sellers_id")
+
+   // @JsonBackReference
+    private Sellers sellers;
+
+
+
+    //TOSTRING
     @Override
     public String toString() {
         return "Properties{" +
                 "property_id=" + property_id +
                 ", address='" + address + '\'' +
                 ", postcode='" + postcode + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
                 ", status='" + status + '\'' +
                 ", type='" + type + '\'' +
-                ", bedrooms='" + bedrooms + '\'' +
-                ", bathrooms='" + bathrooms + '\'' +
-                ", garden='" + garden + '\'' +
-                ", seller_id_fk='" + seller_id_fk + '\'' +
+                ", bedrooms=" + bedrooms +
+                ", bathrooms=" + bathrooms +
+                ", garden=" + garden +
+                ", buyers=" + buyers +
                 ", sellers=" + sellers +
                 '}';
     }

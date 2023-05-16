@@ -25,21 +25,31 @@ public class BuyerService {
     }
 
 
-    public Buyers getDepartment(Long id) {
+    public Buyers getBuyer(Long id) {
 
         return this.repo.findById(id).get();
 
     }
 
 
-    public Buyers createDepartment (Buyers dep){
+    public Buyers createBuyer (Buyers dep){
 
         return this.repo.save(dep);
 
     }
+    public Buyers updateBuyers (long buyer_id, Buyers updatedBuyer)
+    {
+        Buyers toUpdate = this.getBuyer(buyer_id);
+        toUpdate.setFirstName(updatedBuyer.getFirstName());
+        toUpdate.setLastName(updatedBuyer.getLastName());
+        toUpdate.setEmail(updatedBuyer.getEmail());
+        toUpdate.setPhone(updatedBuyer.getPhone());
 
-    public Buyers deleteDepartment (long id){
-        Buyers removed = this.getDepartment(id);
+        return this.repo.save(toUpdate);
+    }
+
+    public Buyers deleteBuyer (long id){
+        Buyers removed = this.getBuyer(id);
         this.repo.deleteById(id);
         return removed;
 

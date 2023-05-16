@@ -7,16 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/buyer")
 public class BuyerController {
 
     @Autowired
     BuyerService service;
 
     @Autowired
-    BuyerRepo mRepo;
+    BuyerRepo bRepo;
 
     @GetMapping("/read")
     public List<Buyers> read() {
@@ -24,18 +26,23 @@ public class BuyerController {
     }
 
     @GetMapping("/read/{id}")
-    public Buyers readOne(@PathVariable long id ) {
-        return service.getDepartment(id);
+    public Buyers readOne(@PathVariable long id) {
+        return service.getBuyer(id);
     }
 
     @PostMapping("/add")
-    public Buyers add(@RequestBody Buyers newDep){
-        return service.createDepartment(newDep);
+    public Buyers add(@RequestBody Buyers newBuy) {
+        return service.createBuyer(newBuy);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable long id ) {
-        service.deleteDepartment(id);
+    public Buyers delete(@PathVariable long id) {
+        return service.deleteBuyer(id);
     }
 
+    @PutMapping("/update/{id}")
+    public void update(@RequestBody Buyers newBuy, @PathVariable long id) {
+         service.updateBuyers(id, newBuy);
+    }
 }
+

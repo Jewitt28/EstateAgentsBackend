@@ -8,34 +8,41 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/", allowedHeaders = "*")
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/seller")
 public class SellerController {
 
-        @Autowired
-        SellerRepo mRepo;
+    @Autowired
+    SellerRepo mRepo;
 
-        @Autowired
-        SellerService service;
+    @Autowired
+    SellerService service;
 
-        @GetMapping("/read")
-        public List<Sellers> read() {
-            return service.getAll();
-        }
+    @GetMapping("/read")
+    public List<Sellers> read() {
+        return service.getAll();
+    }
 
-        @GetMapping("/read/{id}")
-        public Sellers readOne(@PathVariable long id ) {
-            return service.getEmployee(id);
-        }
+    @GetMapping("/read/{id}")
+    public Sellers readOne(@PathVariable long id) {
+        return service.getSeller(id);
+    }
 
-        @PostMapping("/add")
-        public Sellers add(@RequestBody Sellers newEmp){
-            return service.createEmployee(newEmp);
-        }
+    @PostMapping("/add")
+    public Sellers add(@RequestBody Sellers newSeller) {
+        return service.createSeller(newSeller);
+    }
 
-        @DeleteMapping("/delete/{id}")
-        public void delete(@PathVariable long id ) {
-            service.deleteEmployee(id);
-        }
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable long id) {
+        service.deleteSeller(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public Sellers updatePerson(@PathVariable long id
+            , @RequestBody Sellers sellers) {
+        return this.service.updateSeller(id, sellers);
 
     }
+}

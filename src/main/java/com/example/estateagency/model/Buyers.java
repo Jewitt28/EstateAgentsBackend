@@ -6,13 +6,17 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table (name= "buyers")
+
 public class Buyers {
+
+
 
     @Id
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private long id;
+    private long buyers_id;
     private String firstName;
     private String lastName;
 
@@ -20,26 +24,42 @@ public class Buyers {
 
     private String address;
 
-    private int postcode;
+    private String postcode;
 
-    private int phone;
+    private long phone;
 
+    @OneToMany(mappedBy = "buyers", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Properties> propertiesList;
 
-
-    public long getId() {
-        return id;
+    public long getBuyers_id() {
+        return buyers_id;
     }
 
+    public void setPhone(long phone) {
+        this.phone = phone;
+    }
 
+    public List<Properties> getPropertiesList() {
+        return propertiesList;
+    }
 
-    public Buyers(long id, String firstName, String lastName, String email, String address, int postcode, int phone, Buyers buyers, List<Properties> propertiesList) {
-        this.id = id;
+    public void setPropertiesList(List<Properties> propertiesList) {
+        this.propertiesList = propertiesList;
+    }
+
+    public Buyers(long buyers_id, String firstName, String lastName, String email, String address, String postcode, long phone, Buyers buyers, List<Properties> propertiesList) {
+        this.buyers_id = buyers_id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.postcode = postcode;
         this.phone = phone;
+    }
+
+    public long getPhone() {
+        return phone;
     }
 
     public String getEmail() {
@@ -58,27 +78,31 @@ public class Buyers {
         this.address = address;
     }
 
-    public int getPostcode() {
+    public String getPostcode() {
         return postcode;
     }
 
-    public void setPostcode(int postcode) {
+    public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
 
-    public int getPhone() {
-        return phone;
-    }
 
-    public void setPhone(int phone) {
+    public Buyers(long buyers_id, String firstName, String lastName, String email, String address, String postcode, long phone, List<Properties> propertiesList) {
+        this.buyers_id = buyers_id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.postcode = postcode;
         this.phone = phone;
+        this.propertiesList = propertiesList;
     }
 
     public Buyers() {
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setBuyers_id(long buyers_id) {
+        this.buyers_id = buyers_id;
     }
 
     public String getFirstName() {
@@ -102,7 +126,7 @@ public class Buyers {
     @Override
     public String toString() {
         return "Buyers{" +
-                "id=" + id +
+                "buyers_id=" + buyers_id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
